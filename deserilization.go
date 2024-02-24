@@ -6,7 +6,7 @@ import (
 	"net/url"
 )
 
-type URL struct {
+type MyURL struct {
 	Scheme string
 	Path   string
 }
@@ -20,7 +20,7 @@ func parseURL(textURL string) (*url.URL, error) {
 	return parsedURL, nil
 }
 
-func (u *URL) UnmarshalJSON(input []byte) error {
+func (u *MyURL) UnmarshalJSON(input []byte) error {
 	var textURL string
 
 	err := json.Unmarshal(input, &textURL)
@@ -43,7 +43,7 @@ func main() {
 	// Example JSON data containing a URL
 	jsonData := []byte(`"https://example.com/path"`)
 
-	var u URL
+	var u MyURL
 	err := u.UnmarshalJSON(jsonData)
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -51,6 +51,6 @@ func main() {
 	}
 
 	fmt.Println("Parsed URL:")
-	fmt.Println("Scheme:", u)
+	fmt.Println("Scheme:", u.Scheme)
 	fmt.Println("Path:", u.Path)
 }
