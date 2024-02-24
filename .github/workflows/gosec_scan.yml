@@ -1,0 +1,27 @@
+name: Gosec Scan
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  scan:
+    name: Scan Code with Gosec
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.16'
+
+      - name: Install Gosec
+        run: GO111MODULE=on go get github.com/securego/gosec/v2/cmd/gosec
+
+      - name: Run Gosec
+        run: gosec ./...
+
